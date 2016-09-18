@@ -9,7 +9,7 @@ import core.Environnement;
 import core.Parameters;
 
 public class Shark extends Agent<EnvironnementWator> {
-	public static final int SharkBreedTime = 6, SharkStarveTime = 5;
+	public static int SharkBreedTime = 6, SharkStarveTime = 5;
 	public int age, hungry, reproductionDelay;
 
 	public Point nextPoint;

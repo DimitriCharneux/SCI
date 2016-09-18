@@ -113,6 +113,21 @@ public class Main {
 					EnvironnementWator.nbBeginSharks = Integer.parseInt(args[i + 1]);
 				} catch (NumberFormatException e) {}
 				break;
+			case "SharkBreedTime":
+				try {
+					Shark.SharkBreedTime = Integer.parseInt(args[i + 1]);
+				} catch (NumberFormatException e) {}
+				break;
+			case "SharkStarveTime":
+				try {
+					Shark.SharkStarveTime = Integer.parseInt(args[i + 1]);
+				} catch (NumberFormatException e) {}
+				break;
+			case "FishBreedTime":
+				try {
+					Fish.FishBreedTime = Integer.parseInt(args[i + 1]);
+				} catch (NumberFormatException e) {}
+				break;
 			}
 
 		}

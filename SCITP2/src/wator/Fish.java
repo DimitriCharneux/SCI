@@ -9,7 +9,7 @@ import core.Environnement;
 import core.Parameters;
 
 public class Fish extends Agent<EnvironnementWator> {
-	public static final int FishBreedTime = 5;
+	public static int FishBreedTime = 5;
 
 	public Point nextPoint;
 	public int age, reproductionDelay;
