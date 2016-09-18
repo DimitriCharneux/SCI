@@ -1,4 +1,11 @@
+package particules;
+
 import java.awt.Point;
+
+
+import core.Agent;
+import core.Environnement;
+import core.Parameters;
 
 
 

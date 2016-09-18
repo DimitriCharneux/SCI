@@ -1,9 +1,12 @@
+package core;
+
 import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+
 
 public class Vue extends JFrame implements Observer {
 

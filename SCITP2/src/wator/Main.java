@@ -1,4 +1,12 @@
+package wator;
+
 import java.util.Random;
+
+
+import core.Environnement;
+import core.Parameters;
+import core.SMA;
+import core.Vue;
 
 
 public class Main {
@@ -103,19 +111,13 @@ public class Main {
 			Parameters.random = new Random();
 		else 
 			Parameters.random = new Random(Parameters.seed);
-		Environnement env = new Environnement();
+		Environnement env = new EnvironnementWator();
 		try {
 			env.init();
-		} catch (NBBillesInvalideException e) {
-			System.out.println("Nombre de billes invalides !");
+		} catch (Exception e) {
+			System.out.println("Nombre d'agents invalide !");
 			return ;
 		}
-		
-		//test colision
-//		env.initTest();
-//		env.addAgent(new Agent(0, 0, env, 1, -1));
-//		env.addAgent(new Agent(8, 0, env, -1, -1));
-//		//fin test colision
 		
 		//env.setTorique(true);
 		SMA sma = new SMA(env);

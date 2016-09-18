@@ -1,11 +1,14 @@
+package core;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Environnement {
+
+public abstract class Environnement {
 	protected Agent [][] environnement;
-	protected List<Agent> agents;
+	public List<Agent> agents;
 	
 	
 	
@@ -21,7 +24,7 @@ public class Environnement {
 	}
 	
 	
-	public void init() throws NBBillesInvalideException{
+	public void init() throws NBAgentInvalideException{
 		environnement = new Agent [Parameters.gridSizeX][Parameters.gridSizeY];
 		agents = new ArrayList<Agent>();
 		addNewAgent();
@@ -31,24 +34,7 @@ public class Environnement {
 		Parameters.TORIQUE = b;
 	}
 	
-	private void addNewAgent() throws NBBillesInvalideException{
-		
-	//TODO gestion des erreurs du au nombre des agents souhaité
-		if(Parameters.nbParticles < 0 || Parameters.nbParticles > Parameters.gridSizeX * Parameters.gridSizeY)
-			throw new NBBillesInvalideException();
-		
-		for(int i=0; i<Parameters.nbParticles; i++){
-			int x = Parameters.random.nextInt(Parameters.gridSizeX);
-			int y = Parameters.random.nextInt(Parameters.gridSizeY);
-			if(environnement[x][y] == null){
-				Agent tmp = new Particule(x, y, this);
-				environnement[x][y] = tmp;
-				agents.add(tmp);
-			} else {
-				i--;
-			}
-		}
-	}
+	public abstract void addNewAgent() throws NBAgentInvalideException;
 
 	public boolean estTorique() {
 		return Parameters.TORIQUE;

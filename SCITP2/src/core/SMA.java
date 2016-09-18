@@ -1,5 +1,9 @@
+package core;
+
 import java.util.Collections;
 import java.util.Observable;
+
+
 
 
 public class SMA extends Observable {

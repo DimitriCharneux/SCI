@@ -1,7 +1,10 @@
+package core;
+
 
 
 import java.awt.Color;
 import java.awt.Point;
+
 
 public abstract class Agent {
 	public int id;
@@ -52,7 +55,7 @@ public abstract class Agent {
 
 	public abstract void decide();
 
-	public void inversePosition() {
+	public void inverseDirection() {
 		directionx = directionx * -1;
 		directiony = directiony * -1;
 		if (Parameters.trace)
