@@ -6,30 +6,54 @@ import java.util.List;
 
 import core.Agent;
 import core.Environnement;
+import core.Parameters;
 
-public class Fish extends Agent{
+public class Fish extends Agent<EnvironnementWator> {
 	public static final int FishBreedTime = 5;
-	
-	public int age;
-	
+
+	public Point nextPoint;
+	public int age, reproductionDelay;
+
 	public Fish(int x, int y, EnvironnementWator env) {
 		super(x, y, env);
-		age = 0;
+		age = reproductionDelay= 0;
 		color = Color.green;
 	}
 
 	@Override
 	public void decide() {
-		if(age >= Fish.FishBreedTime)
-			color = Color.blue;
-		List<Point> listVoisins = ((EnvironnementWator)env).getFreeCasesAround(x, y);
-		
+		if(!env.listDead.contains(this)){
+		List<Point> listFreeCase = env.getFreeCasesAround(x, y);
+		if (!listFreeCase.isEmpty())
+			nextPoint = listFreeCase
+					.get((int) (Parameters.random.nextFloat() * listFreeCase
+							.size()));
 		age++;
+		reproductionDelay++;
+		}
 	}
 
 	@Override
 	public void update() {
-		
+		if (nextPoint != null) {
+			if (reproductionDelay >= Fish.FishBreedTime){
+				env.addBaby(new Fish(x, y, env));
+				EnvironnementWator.nbFishes++;
+				reproductionDelay = 0;
+			}else
+				env.removeTabAgent(this);
+			x = nextPoint.x;
+			y = nextPoint.y;
+			nextPoint = null;
+			env.moveAgent(this);
+		}
+		color = Color.blue;
 	}
 
+	@Override
+	public String toString() {
+		return "fish " + id + " ; " + x + " ; "
+				+ y + " ; " + age;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package particules;
 
+import java.awt.Color;
 import java.awt.Point;
 
 
@@ -9,13 +10,28 @@ import core.Parameters;
 
 
 
-public class Particule extends Agent{
+public class Particule extends Agent<EnvironnementParticule>{
 
-	public Particule(int x, int y, Environnement env) {
+	public Particule(int x, int y, EnvironnementParticule env) {
 		super(x, y, env);
+		color = new Color((float) Math.random(), (float) Math.random(),
+				(float) Math.random());
+		color = new Color(Parameters.random.nextFloat(),
+				Parameters.random.nextFloat(), Parameters.random.nextFloat());
+		int nb = (int) (Parameters.random.nextFloat() * 8);
+		directionx = Parameters.listDirection[nb].x;
+		directiony = Parameters.listDirection[nb].y;
+		if (Parameters.trace)
+			System.out.println(this);
 	}
-	public Particule(int x, int y, Environnement env, int directionx, int directiony) {
+	public Particule(int x, int y, EnvironnementParticule env, int directionx, int directiony) {
 		super(x, y, env, directionx, directiony);
+		color = new Color((float) Math.random(), (float) Math.random(),
+				(float) Math.random());
+		this.directionx = directionx;
+		this.directiony = directiony;
+		if (Parameters.trace)
+			System.out.println(this);
 	}
 	
 	public void decide() {
@@ -48,7 +64,7 @@ public class Particule extends Agent{
 			nextCase = nextCaseNonTorique();
 		if (env.getAgent(nextCase) != null) {
 			Point p = new Point(directionx, directiony);
-			Agent a = env.getAgent(nextCase);
+			Particule a =(Particule) env.getAgent(nextCase);
 			echangePosition(a.directionx, a.directiony);
 			a.echangePosition(p.x, p.y);
 			colision = true;
@@ -67,9 +83,41 @@ public class Particule extends Agent{
 		} else {
 			tmp = nextCaseNonTorique();
 		}
-		env.removeAgent(this);
+		env.removeTabAgent(this);
 		x = tmp.x;
 		y = tmp.y;
 		env.moveAgent(this);
+	}
+	
+	public Point nextCaseTorique() {
+		int newx = (x + directionx) % Parameters.gridSizeX;
+		int newy = (y + directiony) % Parameters.gridSizeY;
+		newx = newx < 0 ? newx + Parameters.gridSizeX : newx;
+		newy = newy < 0 ? newy + Parameters.gridSizeY : newy;
+		return new Point(newx, newy);
+	}
+
+	public Point nextCaseNonTorique() {
+		return new Point(x + directionx, y + directiony);
+	}
+	
+	public void inverseDirection() {
+		directionx = directionx * -1;
+		directiony = directiony * -1;
+		if (Parameters.trace)
+			System.out.println(this);
+	}
+
+	public void echangePosition(int dirx, int diry) {
+		directionx = dirx;
+		directiony = diry;
+		if (Parameters.trace)
+			System.out.println(this);
+	}
+	
+	@Override
+	public String toString() {
+		return id + " ; " + directionx + " ; " + directiony + " ; " + x + " ; "
+				+ y;
 	}
 }

@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import particules.Particule;
 import core.Agent;
 import core.Environnement;
 import core.NBAgentInvalideException;
@@ -13,7 +12,14 @@ import core.Parameters;
 public class EnvironnementWator extends Environnement {
 	public static int nbSharks = 0, nbFishes = 0, nbBeginSharks = 5,
 			nbBeginFishes = 25;
-
+	public List<Agent> listBaby, listDead;
+	
+	public EnvironnementWator(){
+		listBaby = new ArrayList<Agent>();
+		listDead = new ArrayList<Agent>();
+	}
+	
+	
 	@Override
 	public void addNewAgent() throws NBAgentInvalideException {
 		int nbAgent = EnvironnementWator.nbBeginFishes
@@ -29,6 +35,7 @@ public class EnvironnementWator extends Environnement {
 				Agent tmp = new Fish(x, y, this);
 				environnement[x][y] = tmp;
 				agents.add(tmp);
+				EnvironnementWator.nbFishes ++;
 			} else {
 				i--;
 			}
@@ -41,6 +48,7 @@ public class EnvironnementWator extends Environnement {
 				Agent tmp = new Shark(x, y, this);
 				environnement[x][y] = tmp;
 				agents.add(tmp);
+				EnvironnementWator.nbSharks ++;
 			} else {
 				i--;
 			}
@@ -73,6 +81,27 @@ public class EnvironnementWator extends Environnement {
 				}
 		}
 		return listPoint;
+	}
+	
+	public void addBaby(Agent baby){
+		System.out.println("birth" + baby);
+		environnement[baby.x][baby.y] = baby;
+		listBaby.add(baby);
+	}
+	
+	public void addDead(Agent dead){
+		System.out.println("death" + dead);
+		environnement[dead.x][dead.y] = null;
+		listDead.add(dead);
+	}
+
+	@Override
+	public void environnementUpdate() {
+		agents.addAll(listBaby);
+		agents.removeAll(listDead);
+		System.out.println("sharks ; " + EnvironnementWator.nbSharks);
+		System.out.println("fishes ; " + EnvironnementWator.nbFishes);
+		listBaby = new ArrayList<Agent>();
 	}
 
 }

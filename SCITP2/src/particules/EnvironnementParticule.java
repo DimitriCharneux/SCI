@@ -25,4 +25,7 @@ public class EnvironnementParticule extends Environnement{
 			}
 		}
 	}
+
+	@Override
+	public void environnementUpdate() {}
 }

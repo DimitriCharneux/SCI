@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public abstract class Environnement {
-	protected Agent [][] environnement;
+	public Agent [][] environnement;
 	public List<Agent> agents;
 	
 	
@@ -40,8 +40,13 @@ public abstract class Environnement {
 		return Parameters.TORIQUE;
 	}
 	
-	public void removeAgent(Agent agent) {
+	public void removeTabAgent(Agent agent) {
 		environnement[agent.x][agent.y] = null;
+	}
+	
+	public void removeAllAgent(Agent agent) {
+		environnement[agent.x][agent.y] = null;
+		agents.remove(agent);
 	}
 	
 	public void moveAgent(Agent agent) {
@@ -55,4 +60,6 @@ public abstract class Environnement {
 	public Agent getAgent(Point p){
 		return environnement[p.x][p.y];
 	}
+	
+	public abstract void environnementUpdate();
 }

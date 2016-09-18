@@ -34,6 +34,7 @@ public class SMA extends Observable {
 					agent.decide();
 					agent.update();
 				}
+				env.environnementUpdate();
 				this.setChanged();
 				this.notifyObservers();
 				Parameters.tick++;
