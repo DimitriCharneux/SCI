@@ -21,7 +21,7 @@ Vous pouvez ajoutez les paramètres suivantes :
 	nbFishes [nombre] pour modifier le nombre de fish de la grille (3 par defaut).
 	
 Configuration efficace en Torique comme en Non torique:
-	SharkBreedTime = 6, SharkStarveTime = 5, FishBreedTime = 2, delay 50 gridSizeX 100 gridSizeY 100 boxSize 6 nbSharks 100 nbFishes 1000 
+	SharkBreedTime = 6, SharkStarveTime = 5, FishBreedTime = 2, delay 50 gridSizeX 100 gridSizeY 100 boxSize 6 nbSharks 1000 nbFishes 4000 
 	
 
 	

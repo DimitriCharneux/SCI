@@ -10,8 +10,8 @@ import core.NBAgentInvalideException;
 import core.Parameters;
 
 public class EnvironnementWator extends Environnement {
-	public static int nbSharks = 0, nbFishes = 0, nbBeginSharks = 5,
-			nbBeginFishes = 25;
+	public static int nbSharks = 0, nbFishes = 0, nbBeginSharks = 1000,
+			nbBeginFishes = 4000;
 
 	@Override
 	public void addNewAgent() throws NBAgentInvalideException {
