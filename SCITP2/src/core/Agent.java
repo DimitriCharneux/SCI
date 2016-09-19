@@ -12,6 +12,7 @@ public abstract class Agent <T extends Environnement>{
 	public int directionx, directiony, x, y;
 	public T env;
 	protected boolean colision;
+	public boolean isLife = true;
 
 	public Agent(int x, int y, T env) {
 		this.env = env;

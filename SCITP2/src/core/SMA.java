@@ -25,7 +25,8 @@ public class SMA extends Observable {
 				if (!Parameters.sheduling.equals("sequentiel"))
 					Collections.shuffle(env.agents);
 				if (!Parameters.sheduling.equals("aleatoire")) {
-					for (Agent agent : env.agents) {
+					Agent[] tab = (Agent[]) env.agents.toArray(new Agent[env.agents.size()]);
+					for (Agent agent : tab) {
 						agent.decide();
 						agent.update();
 					}

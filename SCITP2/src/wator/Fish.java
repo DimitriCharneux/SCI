@@ -9,7 +9,7 @@ import core.Environnement;
 import core.Parameters;
 
 public class Fish extends Agent<EnvironnementWator> {
-	public static int FishBreedTime = 5;
+	public static int FishBreedTime = 2;
 
 	public Point nextPoint;
 	public int age, reproductionDelay;
@@ -22,7 +22,7 @@ public class Fish extends Agent<EnvironnementWator> {
 
 	@Override
 	public void decide() {
-		if(!env.listDead.contains(this)){
+		if(isLife){
 		List<Point> listFreeCase = env.getFreeCasesAround(x, y);
 		if (!listFreeCase.isEmpty())
 			nextPoint = listFreeCase

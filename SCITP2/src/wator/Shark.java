@@ -11,7 +11,6 @@ import core.Parameters;
 public class Shark extends Agent<EnvironnementWator> {
 	public static int SharkBreedTime = 6, SharkStarveTime = 5;
 	public int age, hungry, reproductionDelay;
-
 	public Point nextPoint;
 
 	public Shark(int x, int y, EnvironnementWator env) {
@@ -22,7 +21,7 @@ public class Shark extends Agent<EnvironnementWator> {
 
 	@Override
 	public void decide() {
-		if (!env.listDead.contains(this)) {
+		if (isLife) {
 			if (SharkStarveTime == hungry + 1)
 				this.died();
 			else {

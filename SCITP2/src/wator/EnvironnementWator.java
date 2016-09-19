@@ -12,12 +12,6 @@ import core.Parameters;
 public class EnvironnementWator extends Environnement {
 	public static int nbSharks = 0, nbFishes = 0, nbBeginSharks = 5,
 			nbBeginFishes = 25;
-	public List<Agent> listBaby, listDead;
-
-	public EnvironnementWator() {
-		listBaby = new ArrayList<Agent>();
-		listDead = new ArrayList<Agent>();
-	}
 
 	@Override
 	public void addNewAgent() throws NBAgentInvalideException {
@@ -55,6 +49,34 @@ public class EnvironnementWator extends Environnement {
 	}
 
 	public List<Point> getFreeCasesAround(int x, int y) {
+		if (Parameters.TORIQUE)
+			return getFreeCasesAroundTorique(x, y);
+		else
+			return getFreeCasesAroundNoTorique(x, y);
+	}
+
+	private List<Point> getFreeCasesAroundTorique(int x, int y) {
+		List<Point> listPoint = new ArrayList<Point>();
+		for (int i = x - 1; i <= x + 1; i++) {
+			int ii = i;
+			if (ii < 0)
+				ii = environnement.length-1;
+			if (ii == environnement.length)
+				ii = 0;
+			for (int j = y - 1; j <= y + 1; j++) {
+				int jj = j;
+				if (jj < 0)
+					jj = environnement[0].length -1;
+				if (jj == environnement[0].length)
+					jj = 0;
+				if (environnement[ii][jj] == null)
+					listPoint.add(new Point(ii, jj));
+			}
+		}
+		return listPoint;
+	}
+
+	private List<Point> getFreeCasesAroundNoTorique(int x, int y) {
 		List<Point> listPoint = new ArrayList<Point>();
 		for (int i = x - 1; i <= x + 1; i++) {
 			if (i >= 0 && i < environnement.length)
@@ -83,28 +105,27 @@ public class EnvironnementWator extends Environnement {
 	}
 
 	public void addBaby(Agent baby) {
-		if (Parameters.trace)
-			System.out.println("birth" + baby);
+		// if (Parameters.trace)
+		// System.out.println("birth" + baby);
 		environnement[baby.x][baby.y] = baby;
-		listBaby.add(baby);
+		agents.add(baby);
 	}
 
 	public void addDead(Agent dead) {
-		if (Parameters.trace)
-			System.out.println("death" + dead);
+		// if (Parameters.trace)
+		// System.out.println("death" + dead);
 		environnement[dead.x][dead.y] = null;
-		listDead.add(dead);
+		dead.isLife = false;
+		agents.remove(dead);
 	}
 
 	@Override
 	public void environnementUpdate() {
-		agents.addAll(listBaby);
-		agents.removeAll(listDead);
 		if (Parameters.trace) {
 			System.out.println("sharks ; " + EnvironnementWator.nbSharks);
 			System.out.println("fishes ; " + EnvironnementWator.nbFishes);
+			System.out.println("total ; " + agents.size());
 		}
-		listBaby = new ArrayList<Agent>();
 	}
 
 }

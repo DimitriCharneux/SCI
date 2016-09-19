@@ -28,8 +28,8 @@ public class PanelBilles extends JPanel {
 						i * Parameters.boxSize);
 			}
 		}
-
-		for (Agent agent : sma.env.agents) {
+		Agent[] tab = (Agent[]) sma.env.agents.toArray(new Agent[sma.env.agents.size()]);
+		for (Agent agent : tab) {
 			graph.setColor(agent.color);
 			//System.out.println("x : " + agent.x + ", y : " + agent.y);
 			graph.fillOval(Parameters.boxSize * agent.x, Parameters.boxSize * agent.y, Parameters.boxSize,
