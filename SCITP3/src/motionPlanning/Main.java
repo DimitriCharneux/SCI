@@ -134,8 +134,15 @@ public class Main {
 		SMA sma = new SMA(env);
 		Vue vue = new Vue(sma);
 		sma.addObserver(vue);
+		Interaction i = new Interaction();
 		vue.addKeyListener(env.avatar);
+		vue.addKeyListener(i);
 		sma.run();
+		if(env.avatar.attrape){
+			System.out.println("Perdu !");
+		} else {
+			System.out.println("gagné !");
+		}
 	}
 	
 }

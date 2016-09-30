@@ -7,10 +7,12 @@ import java.awt.event.KeyListener;
 
 import core.Agent;
 import core.Parameters;
+import core.SMA;
 
 public class Avatar extends Agent<EnvironnementMotionPlanning> implements
 		KeyListener {
 	public static int vitesseAvatar = 1;
+	public boolean attrape = false;
 
 	public Avatar(int x, int y, EnvironnementMotionPlanning env) {
 		super(x, y, env);
@@ -43,7 +45,6 @@ public class Avatar extends Agent<EnvironnementMotionPlanning> implements
 			directiony = 0;
 			break;
 		}
-		System.out.println("frappe" + e.getKeyCode());
 	}
 
 	@Override
@@ -57,41 +58,34 @@ public class Avatar extends Agent<EnvironnementMotionPlanning> implements
 			int tmpY = this.y + directiony;
 			if (tmpX < 0 || tmpX >= this.env.environnement.length || tmpY < 0
 					|| tmpY >= this.env.environnement[0].length
-					|| this.env.environnement[tmpX][tmpY] instanceof Mur) {
+					|| this.env.environnement[tmpX][tmpY] instanceof Mur
+					|| this.env.environnement[tmpX][tmpY] instanceof Chasseur) {
 				directionx = 0;
 				directiony = 0;
 			}
 		}
 	}
 
-	//TODO voir si j'enleve le torique
 	public void update() {
 		if (Parameters.tick % Avatar.vitesseAvatar == 0
 				&& (directionx != 0 || directiony != 0)) {
-			Point tmp;
-			if (env.estTorique()) {
-				tmp = nextCaseTorique();
-			} else {
-				tmp = nextCaseNonTorique();
-			}
 			env.removeTabAgent(this);
-			x = tmp.x;
-			y = tmp.y;
+			x += directionx;
+			y += directiony;
+
+			if(env.environnement[x][y] instanceof Defender){
+				Defender def = (Defender) env.environnement[x][y];
+				def.die();
+				EnvironnementMotionPlanning.cptDefender++;
+				System.out.println("nbdefender ; " + EnvironnementMotionPlanning.cptDefender);
+			}
+			//on stop
+			if(env.environnement[x][y] instanceof Winner){
+				SMA.fini = true;
+			}
+			
 			env.moveAgent(this);
 			env.calculPathFinding();
 		}
 	}
-
-	public Point nextCaseTorique() {
-		int newx = (x + directionx) % Parameters.gridSizeX;
-		int newy = (y + directiony) % Parameters.gridSizeY;
-		newx = newx < 0 ? newx + Parameters.gridSizeX : newx;
-		newy = newy < 0 ? newy + Parameters.gridSizeY : newy;
-		return new Point(newx, newy);
-	}
-
-	public Point nextCaseNonTorique() {
-		return new Point(x + directionx, y + directiony);
-	}
-
 }

@@ -17,7 +17,7 @@ public class Vue extends JFrame implements Observer {
 		if(Parameters.canvasSizeX == -1)
 			Parameters.canvasSizeX = Parameters.gridSizeX*Parameters.boxSize +30;
 		if(Parameters.canvasSizeY == -1)
-			Parameters.canvasSizeY = (Parameters.gridSizeY*Parameters.boxSize) + 30;
+			Parameters.canvasSizeY = (Parameters.gridSizeY*Parameters.boxSize) + 60;
 		this.setSize(Parameters.canvasSizeX, Parameters.canvasSizeY);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

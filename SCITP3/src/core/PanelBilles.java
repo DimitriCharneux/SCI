@@ -1,8 +1,12 @@
 package core;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
+
+import motionPlanning.EnvironnementMotionPlanning;
+import motionPlanning.Mur;
 
 
 
@@ -34,6 +38,13 @@ public class PanelBilles extends JPanel {
 			//System.out.println("x : " + agent.x + ", y : " + agent.y);
 			graph.fillOval(Parameters.boxSize * agent.x, Parameters.boxSize * agent.y, Parameters.boxSize,
 					Parameters.boxSize);
+		}
+		
+		graph.setColor(Color.GRAY);
+		for (int x = 0; x < sma.env.environnement.length; x++) {
+			for (int y = 0; y < sma.env.environnement[0].length; y++) {
+				graph.drawString(((EnvironnementMotionPlanning)(sma.env)).pathFinding[x][y] + "", 15 + x * Parameters.boxSize ,15 + y* Parameters.boxSize);
+			}
 		}
 	}
 

@@ -18,6 +18,7 @@ public class EnvironnementMotionPlanning extends Environnement {
 	public Avatar avatar;
 	public double pourcentageMur;
 	public int[][] pathFinding;
+	public static int cptDefender = 0;
 
 	public void init() throws NBAgentInvalideException {
 		environnement = new Agent[Parameters.gridSizeX][Parameters.gridSizeY];
@@ -28,6 +29,7 @@ public class EnvironnementMotionPlanning extends Environnement {
 		addWall();
 		addAvatar();
 		addNewAgent();
+		addDefender();
 	}
 
 	private void addAvatar() {
@@ -46,6 +48,29 @@ public class EnvironnementMotionPlanning extends Environnement {
 		calculPathFinding();
 	}
 
+	public void addDefender() {
+		int x, y;
+		boolean place = false;
+		while (!place) {
+			x = Parameters.random.nextInt(Parameters.gridSizeX);
+			y = Parameters.random.nextInt(Parameters.gridSizeY);
+			if (environnement[x][y] == null) {
+				if (cptDefender >= 4) {
+					Winner winner = new Winner(x, y, this);
+					environnement[x][y] = winner;
+					agents.add(winner);
+					place = true;
+				} else {
+					Defender defender = new Defender(x, y, this);
+					environnement[x][y] = defender;
+					agents.add(defender);
+					place = true;
+				}
+			}
+		}
+		calculPathFinding();
+	}
+
 	public void addNewAgent() throws NBAgentInvalideException {
 
 		if (Parameters.nbParticles < 0
@@ -57,10 +82,10 @@ public class EnvironnementMotionPlanning extends Environnement {
 			int x = Parameters.random.nextInt(Parameters.gridSizeX);
 			int y = Parameters.random.nextInt(Parameters.gridSizeY);
 			if (environnement[x][y] == null) {
-				 Agent tmp = new Chasseur(x, y, this);
-				 environnement[x][y] = tmp;
-				 agents.add(tmp);
-				 
+				Agent tmp = new Chasseur(x, y, this);
+				environnement[x][y] = tmp;
+				agents.add(tmp);
+
 			} else {
 				i--;
 			}
@@ -82,16 +107,15 @@ public class EnvironnementMotionPlanning extends Environnement {
 	@Override
 	public void environnementUpdate() {
 	}
-	
+
 	public void calculPathFinding() {
 		initPathFindingToNull();
 		initPathFinding();
 	}
 
-	
-	public void initPathFindingToNull(){
-		for(int x = 0; x < pathFinding.length; x++){
-			for(int y = 0; y < pathFinding[0].length; y++){
+	public void initPathFindingToNull() {
+		for (int x = 0; x < pathFinding.length; x++) {
+			for (int y = 0; y < pathFinding[0].length; y++) {
 				pathFinding[x][y] = -1;
 			}
 		}
@@ -104,27 +128,27 @@ public class EnvironnementMotionPlanning extends Environnement {
 		listCases.add(new Point(avatar.x, avatar.y));
 		while (!listCases.isEmpty()) {
 			Point currentCase = listCases.poll();
-			System.out.println("taille " + listCases.size());
 			List<Point> neighbors = this.getNeighbors(currentCase);
 			for (Point tmp : neighbors) {
-				if(tmp.x < 0 || tmp.y < 0 || tmp.x >= pathFinding.length || tmp.y >= pathFinding[0].length) break;
-				if (!(environnement[tmp.x][tmp.y] instanceof Mur)) {
-					if(pathFinding[tmp.x][tmp.y] == -1 || pathFinding[tmp.x][tmp.y] > pathFinding[currentCase.x][currentCase.y]+1){
-						System.out.println(pathFinding[tmp.x][tmp.y] + " " + pathFinding[currentCase.x][currentCase.y]);
-						pathFinding[tmp.x][tmp.y] = pathFinding[currentCase.x][currentCase.y] +1;
-						listCases.add(tmp);
+				if (!(tmp.x < 0 || tmp.y < 0 || tmp.x >= pathFinding.length || tmp.y >= pathFinding[0].length)) {
+					if (!(environnement[tmp.x][tmp.y] instanceof Mur)) {
+						if (pathFinding[tmp.x][tmp.y] == -1
+								|| pathFinding[tmp.x][tmp.y] > pathFinding[currentCase.x][currentCase.y] + 1) {
+							pathFinding[tmp.x][tmp.y] = pathFinding[currentCase.x][currentCase.y] + 1;
+							listCases.add(tmp);
+						}
 					}
 				}
 			}
 		}
-}
-	
+	}
+
 	public List<Point> getNeighbors(Point currentCase) {
 		List<Point> tmp = new ArrayList<Point>();
-		tmp.add(new Point(currentCase.x+1, currentCase.y));
-		tmp.add(new Point(currentCase.x-1, currentCase.y));
-		tmp.add(new Point(currentCase.x, currentCase.y+1));
-		tmp.add(new Point(currentCase.x, currentCase.y-1));
+		tmp.add(new Point(currentCase.x + 1, currentCase.y));
+		tmp.add(new Point(currentCase.x - 1, currentCase.y));
+		tmp.add(new Point(currentCase.x, currentCase.y + 1));
+		tmp.add(new Point(currentCase.x, currentCase.y - 1));
 		return tmp;
 	}
 
