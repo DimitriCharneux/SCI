@@ -1,4 +1,5 @@
-package motionPlanning;
+package particules;
+
 import java.util.Random;
 
 
@@ -110,11 +111,11 @@ public class Main {
 			Parameters.random = new Random();
 		else 
 			Parameters.random = new Random(Parameters.seed);
-		EnvironnementMotionPlanning env = new EnvironnementMotionPlanning();
+		Environnement env = new EnvironnementParticule();
 		try {
 			env.init();
 		} catch (Exception e) {
-			System.out.println("Nombre de joueur invalide !");
+			System.out.println("Nombre de billes invalide !");
 			return ;
 		}
 		
@@ -128,7 +129,6 @@ public class Main {
 		SMA sma = new SMA(env);
 		Vue vue = new Vue(sma);
 		sma.addObserver(vue);
-		vue.addKeyListener(env.avatar);
 		sma.run();
 	}
 	

@@ -1,5 +1,4 @@
-package particules;
-
+package motionPlanning;
 import java.util.Random;
 
 
@@ -104,18 +103,24 @@ public class Main {
 					Parameters.seed = 3;
 				}
 				break;
-			}
+			
+		case "vitesseAvatar":
+			try{
+				Avatar.vitesseAvatar = Integer.parseInt(args[i+1]);
+			} catch (NumberFormatException e){}
+			break;
+		}
 			
 		}
 		if(Parameters.seed == 0)
 			Parameters.random = new Random();
 		else 
 			Parameters.random = new Random(Parameters.seed);
-		Environnement env = new EnvironnementParticule();
+		EnvironnementMotionPlanning env = new EnvironnementMotionPlanning();
 		try {
 			env.init();
 		} catch (Exception e) {
-			System.out.println("Nombre de billes invalide !");
+			System.out.println("Nombre de joueur invalide !");
 			return ;
 		}
 		
@@ -129,6 +134,7 @@ public class Main {
 		SMA sma = new SMA(env);
 		Vue vue = new Vue(sma);
 		sma.addObserver(vue);
+		vue.addKeyListener(env.avatar);
 		sma.run();
 	}
 	

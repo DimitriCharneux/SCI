@@ -10,16 +10,17 @@ import core.Parameters;
 
 public class Avatar extends Agent<EnvironnementMotionPlanning> implements
 		KeyListener {
-
+	public static int vitesseAvatar = 1;
 
 	public Avatar(int x, int y, EnvironnementMotionPlanning env) {
 		super(x, y, env);
 		directionx = directiony = 0;
-		this.color = Color.RED;
+		this.color = Color.BLUE;
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -46,31 +47,41 @@ public class Avatar extends Agent<EnvironnementMotionPlanning> implements
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+	}
 
 	@Override
 	public void decide() {
-		int tmpX = this.x + directionx;
-		int tmpY = this.y + directiony;
-		if(tmpX <0 || tmpX>=this.env.environnement.length || tmpY <0 || tmpY>=this.env.environnement[0].length){
-			directionx = 0;
-			directiony = 0;
+		if (Parameters.tick % Avatar.vitesseAvatar == 0) {
+			int tmpX = this.x + directionx;
+			int tmpY = this.y + directiony;
+			if (tmpX < 0 || tmpX >= this.env.environnement.length || tmpY < 0
+					|| tmpY >= this.env.environnement[0].length
+					|| this.env.environnement[tmpX][tmpY] instanceof Mur) {
+				directionx = 0;
+				directiony = 0;
+			}
 		}
 	}
 
+	//TODO voir si j'enleve le torique
 	public void update() {
-		Point tmp;
-		if (env.estTorique()) {
-			tmp = nextCaseTorique();
-		} else {
-			tmp = nextCaseNonTorique();
+		if (Parameters.tick % Avatar.vitesseAvatar == 0
+				&& (directionx != 0 || directiony != 0)) {
+			Point tmp;
+			if (env.estTorique()) {
+				tmp = nextCaseTorique();
+			} else {
+				tmp = nextCaseNonTorique();
+			}
+			env.removeTabAgent(this);
+			x = tmp.x;
+			y = tmp.y;
+			env.moveAgent(this);
+			env.calculPathFinding();
 		}
-		env.removeTabAgent(this);
-		x = tmp.x;
-		y = tmp.y;
-		env.moveAgent(this);
 	}
-	
+
 	public Point nextCaseTorique() {
 		int newx = (x + directionx) % Parameters.gridSizeX;
 		int newy = (y + directiony) % Parameters.gridSizeY;

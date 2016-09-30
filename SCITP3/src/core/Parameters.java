@@ -3,7 +3,6 @@ import java.awt.Point;
 import java.util.Random;
 
 public class Parameters {
-	
 	// pour particules
 	/*public static int gridSizeX=10, gridSizeY=10, nbParticles=3, boxSize = 50, seed = 0,
 			delay = 500, nbTicks=0, refresh=1, tick, canvasSizeX = -1, canvasSizeY = -1, cptBilles = 0, numAgent = 1;*/
@@ -11,7 +10,6 @@ public class Parameters {
 	//pour wator
 	public static int gridSizeX=100, gridSizeY=100, nbParticles=3, boxSize = 5, seed = 0,
 			delay = 50, nbTicks=0, refresh=1, tick, canvasSizeX = -1, canvasSizeY = -1, cptBilles = 0, numAgent = 1;
-	
 	public static boolean TORIQUE = true, grid = true, trace = true;
 	public static String sheduling = "equitable";
 	public static Random random;
