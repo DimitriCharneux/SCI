@@ -6,7 +6,6 @@ import java.util.Observable;
 public class SMA extends Observable {
 	protected Environnement env;
 	public static boolean stop = false, fini = false;
-	int sertARien = 0;
 
 	public SMA(Environnement env) {
 		this.env = env;

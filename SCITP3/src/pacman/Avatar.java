@@ -1,4 +1,4 @@
-package motionPlanning;
+package pacman;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -9,12 +9,13 @@ import core.Agent;
 import core.Parameters;
 import core.SMA;
 
-public class Avatar extends Agent<EnvironnementMotionPlanning> implements
+public class Avatar extends Agent<EnvironnementPacMan> implements
 		KeyListener {
 	public static int vitesseAvatar = 1;
 	public boolean attrape = false;
+	private int nbTourInvincible = 0, nbTourMax = 8; 
 
-	public Avatar(int x, int y, EnvironnementMotionPlanning env) {
+	public Avatar(int x, int y, EnvironnementPacMan env) {
 		super(x, y, env);
 		directionx = directiony = 0;
 		this.color = Color.BLUE;
@@ -67,21 +68,29 @@ public class Avatar extends Agent<EnvironnementMotionPlanning> implements
 	}
 
 	public void update() {
+		if(nbTourInvincible > nbTourMax){
+			nbTourInvincible = 0;
+			Chasseur.fuit = false;
+		}
+		if(Chasseur.fuit)
+			nbTourInvincible ++;
+		
 		if (Parameters.tick % Avatar.vitesseAvatar == 0
 				&& (directionx != 0 || directiony != 0)) {
 			env.removeTabAgent(this);
 			x += directionx;
 			y += directiony;
 
-			if(env.environnement[x][y] instanceof Defender){
-				Defender def = (Defender) env.environnement[x][y];
-				def.die();
-				EnvironnementMotionPlanning.cptDefender++;
-				System.out.println("nbdefender ; " + EnvironnementMotionPlanning.cptDefender);
-			}
 			//on stop
 			if(env.environnement[x][y] instanceof Winner){
 				SMA.fini = true;
+			}
+			
+			if(env.environnement[x][y] instanceof Defender){
+				Defender def = (Defender) env.environnement[x][y];
+				def.die();
+				Chasseur.fuit = true;
+				EnvironnementPacMan.cptDefender++;
 			}
 			
 			env.moveAgent(this);

@@ -4,20 +4,21 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import motionPlanning.EnvironnementMotionPlanning;
+import pacman.EnvironnementPacMan;
 
-public class PanelBilles extends JPanel {
+
+public class MyPanel extends JPanel {
 
 	private SMA sma;
 
-	public PanelBilles(SMA sma) {
+	public MyPanel(SMA sma) {
 		this.sma = sma;
 	}
 
 	public void paintComponent(Graphics graph) {
 		super.paintComponent(graph);
 		if (Parameters.choice == TPChoice.motionPlanning && sma.fini) {
-			if (((EnvironnementMotionPlanning) sma.env).avatar.attrape) {
+			if (((EnvironnementPacMan) sma.env).avatar.attrape) {
 				graph.drawString("Perdu !", 50, 50);
 			} else {
 				graph.drawString("Gagné !", 50, 50);

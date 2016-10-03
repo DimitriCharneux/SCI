@@ -1,12 +1,12 @@
-package motionPlanning;
+package pacman;
 
 import java.awt.Color;
 
 import core.Agent;
 
-public class Mur extends Agent<EnvironnementMotionPlanning>{
+public class Mur extends Agent<EnvironnementPacMan>{
 
-	public Mur(int x, int y, EnvironnementMotionPlanning env) {
+	public Mur(int x, int y, EnvironnementPacMan env) {
 		super(x, y, env);
 		this.color = Color.BLACK;
 	}

@@ -12,6 +12,12 @@ import core.Parameters;
 public class EnvironnementWator extends Environnement {
 	public static int nbSharks = 0, nbFishes = 0, nbBeginSharks = 1000,
 			nbBeginFishes = 4000;
+	
+	public EnvironnementWator(){
+		super();
+		if (Parameters.trace)
+			System.out.println("sharks ; fishes ; total");
+	}
 
 	@Override
 	public void addNewAgent() throws NBAgentInvalideException {
@@ -111,7 +117,7 @@ public class EnvironnementWator extends Environnement {
 		agents.add(baby);
 	}
 
-	public void addDead(Agent dead) {
+	public void removeDead(Agent dead) {
 		// if (Parameters.trace)
 		// System.out.println("death" + dead);
 		environnement[dead.x][dead.y] = null;
@@ -121,11 +127,10 @@ public class EnvironnementWator extends Environnement {
 
 	@Override
 	public void environnementUpdate() {
-		if (Parameters.trace) {
-			System.out.println("sharks ; " + EnvironnementWator.nbSharks);
-			System.out.println("fishes ; " + EnvironnementWator.nbFishes);
-			System.out.println("total ; " + agents.size());
-		}
+		if (Parameters.trace) 
+			System.out.println(EnvironnementWator.nbSharks
+					+ " ; " + EnvironnementWator.nbFishes
+					+ " ; " + agents.size());
 	}
 
 }

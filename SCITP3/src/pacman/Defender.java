@@ -1,13 +1,13 @@
-package motionPlanning;
+package pacman;
 
 import java.awt.Color;
 
 import core.Agent;
 
-public class Defender extends Agent<EnvironnementMotionPlanning>{
+public class Defender extends Agent<EnvironnementPacMan>{
 	int lifeTime;
 	
-	public Defender(int x, int y, EnvironnementMotionPlanning env) {
+	public Defender(int x, int y, EnvironnementPacMan env) {
 		super(x, y, env);
 		color = Color.GREEN;
 		lifeTime = env.environnement.length*2;

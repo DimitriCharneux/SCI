@@ -1,4 +1,4 @@
-package motionPlanning;
+package pacman;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

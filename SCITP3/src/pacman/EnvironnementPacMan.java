@@ -1,4 +1,4 @@
-package motionPlanning;
+package pacman;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import core.Environnement;
 import core.NBAgentInvalideException;
 import core.Parameters;
 
-public class EnvironnementMotionPlanning extends Environnement {
+public class EnvironnementPacMan extends Environnement {
 
 	public Avatar avatar;
 	public double pourcentageMur;

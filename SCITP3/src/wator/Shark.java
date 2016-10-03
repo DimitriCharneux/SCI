@@ -49,7 +49,7 @@ public class Shark extends Agent<EnvironnementWator> {
 	 */
 	private void died() {
 		EnvironnementWator.nbSharks--;
-		env.addDead(this);
+		env.removeDead(this);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Shark extends Agent<EnvironnementWator> {
 	private void eat(Point p) {
 		Fish f = (Fish) (env.environnement[p.x][p.y]);
 		EnvironnementWator.nbFishes--;
-		env.addDead(f);
+		env.removeDead(f);
 		nextPoint = p;
 		hungry = 0;
 	}

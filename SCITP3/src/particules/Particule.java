@@ -36,13 +36,13 @@ public class Particule extends Agent<EnvironnementParticule>{
 	
 	public void decide() {
 		// Verification des colisions avec le contour
-		if (!env.estTorique()) {
-			decideNonTorique();
+		if (!Parameters.TORIQUE) {
+			colisionMur();
 		}
-		colision();
+		colisionParticule();
 	}
 
-	public void decideNonTorique() {
+	private void colisionMur() {
 		// Verification des colisions avec le contour
 		if (x + directionx < 0 || x + directionx > Parameters.gridSizeX - 1) {
 			directionx = directionx * -1;
@@ -56,9 +56,9 @@ public class Particule extends Agent<EnvironnementParticule>{
 		}
 	}
 
-	private void colision() {
+	private void colisionParticule() {
 		Point nextCase;
-		if (env.estTorique())
+		if (Parameters.TORIQUE)
 			nextCase = nextCaseTorique();
 		else
 			nextCase = nextCaseNonTorique();
@@ -78,7 +78,7 @@ public class Particule extends Agent<EnvironnementParticule>{
 			return;
 		}
 		Point tmp;
-		if (env.estTorique()) {
+		if (Parameters.TORIQUE) {
 			tmp = nextCaseTorique();
 		} else {
 			tmp = nextCaseNonTorique();
@@ -89,7 +89,7 @@ public class Particule extends Agent<EnvironnementParticule>{
 		env.moveAgent(this);
 	}
 	
-	public Point nextCaseTorique() {
+	private Point nextCaseTorique() {
 		int newx = (x + directionx) % Parameters.gridSizeX;
 		int newy = (y + directiony) % Parameters.gridSizeY;
 		newx = newx < 0 ? newx + Parameters.gridSizeX : newx;
@@ -97,15 +97,8 @@ public class Particule extends Agent<EnvironnementParticule>{
 		return new Point(newx, newy);
 	}
 
-	public Point nextCaseNonTorique() {
+	private Point nextCaseNonTorique() {
 		return new Point(x + directionx, y + directiony);
-	}
-	
-	public void inverseDirection() {
-		directionx = directionx * -1;
-		directiony = directiony * -1;
-		if (Parameters.trace)
-			System.out.println(this);
 	}
 
 	public void echangePosition(int dirx, int diry) {

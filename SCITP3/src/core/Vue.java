@@ -10,7 +10,7 @@ import javax.swing.JScrollPane;
 
 public class Vue extends JFrame implements Observer {
 
-	private PanelBilles content;
+	private MyPanel content;
 
 	public Vue(SMA sma) {
 		this.setTitle("billes");
@@ -21,7 +21,7 @@ public class Vue extends JFrame implements Observer {
 		this.setSize(Parameters.canvasSizeX, Parameters.canvasSizeY);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		content = new PanelBilles(sma);
+		content = new MyPanel(sma);
 		content.setPreferredSize(new Dimension(Parameters.canvasSizeX, Parameters.canvasSizeY));
 		JScrollPane scroll = new JScrollPane(content);
 		this.setContentPane(scroll);

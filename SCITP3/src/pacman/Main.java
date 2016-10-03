@@ -1,4 +1,4 @@
-package motionPlanning;
+package pacman;
 import java.util.Random;
 
 
@@ -116,7 +116,7 @@ public class Main {
 			Parameters.random = new Random();
 		else 
 			Parameters.random = new Random(Parameters.seed);
-		EnvironnementMotionPlanning env = new EnvironnementMotionPlanning();
+		EnvironnementPacMan env = new EnvironnementPacMan();
 		try {
 			env.init();
 		} catch (Exception e) {

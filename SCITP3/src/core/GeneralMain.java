@@ -2,10 +2,10 @@ package core;
 
 import java.util.Random;
 
+import pacman.EnvironnementPacMan;
+import pacman.Interaction;
 import particules.EnvironnementParticule;
 
-import motionPlanning.EnvironnementMotionPlanning;
-import motionPlanning.Interaction;
 import wator.EnvironnementWator;
 import wator.Fish;
 import wator.Shark;
@@ -24,7 +24,7 @@ public class GeneralMain {
 		if (Parameters.choice == TPChoice.wator) {
 			env = new EnvironnementWator();
 		} else if (Parameters.choice == TPChoice.motionPlanning) {
-			env = new EnvironnementMotionPlanning();
+			env = new EnvironnementPacMan();
 		} else {
 			env = new EnvironnementParticule();
 		}
@@ -40,9 +40,8 @@ public class GeneralMain {
 		Vue vue = new Vue(sma);
 		sma.addObserver(vue);
 		if (Parameters.choice == TPChoice.motionPlanning) {
-			Interaction i = new Interaction();
-			vue.addKeyListener(((EnvironnementMotionPlanning) env).avatar);
-			vue.addKeyListener(i);
+			vue.addKeyListener(((EnvironnementPacMan) env).avatar);
+			vue.addKeyListener(new Interaction());
 		}
 		sma.run();
 	}
@@ -81,9 +80,9 @@ public class GeneralMain {
 				Parameters.TORIQUE = true;
 				break;
 			case "motionPlanningDefaut":
-				Parameters.gridSizeX = 10;
-				Parameters.gridSizeY = 10;
-				Parameters.boxSize = 50;
+				Parameters.gridSizeX = 20;
+				Parameters.gridSizeY = 20;
+				Parameters.boxSize = 25;
 				Parameters.delay = 200;
 				Parameters.nbParticles=3;
 				break;
