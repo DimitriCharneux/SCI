@@ -62,6 +62,32 @@ public class GeneralMain {
 				Parameters.choice = TPChoice.motionPlanning;
 				break;
 			}
+		if (args.length > 1)
+			switch (args[1]) {
+			case "particulesDefaut":
+				Parameters.gridSizeX = 100;
+				Parameters.gridSizeY = 100;
+				Parameters.boxSize = 5;
+				Parameters.delay = 50;
+				Parameters.nbParticles=30;
+				Parameters.TORIQUE = false;
+				break;
+			case "watorDefaut":
+				Parameters.gridSizeX = 100;
+				Parameters.gridSizeY = 100;
+				Parameters.boxSize = 5;
+				Parameters.delay = 50;
+				Parameters.nbParticles=3;
+				Parameters.TORIQUE = true;
+				break;
+			case "motionPlanningDefaut":
+				Parameters.gridSizeX = 10;
+				Parameters.gridSizeY = 10;
+				Parameters.boxSize = 50;
+				Parameters.delay = 200;
+				Parameters.nbParticles=3;
+				break;
+			}
 
 		for (int i = 0; i < args.length - 1; i++) {
 			switch (args[i]) {
