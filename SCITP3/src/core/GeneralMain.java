@@ -23,7 +23,7 @@ public class GeneralMain {
 
 		if (Parameters.choice == TPChoice.wator) {
 			env = new EnvironnementWator();
-		} else if (Parameters.choice == TPChoice.motionPlanning) {
+		} else if (Parameters.choice == TPChoice.pacMan) {
 			env = new EnvironnementPacMan();
 		} else {
 			env = new EnvironnementParticule();
@@ -39,7 +39,7 @@ public class GeneralMain {
 		SMA sma = new SMA(env);
 		Vue vue = new Vue(sma);
 		sma.addObserver(vue);
-		if (Parameters.choice == TPChoice.motionPlanning) {
+		if (Parameters.choice == TPChoice.pacMan) {
 			vue.addKeyListener(((EnvironnementPacMan) env).avatar);
 			vue.addKeyListener(new Interaction());
 		}
@@ -57,8 +57,8 @@ public class GeneralMain {
 				System.out.println("wator");
 				Parameters.choice = TPChoice.wator;
 				break;
-			case "motionPlanning":
-				Parameters.choice = TPChoice.motionPlanning;
+			case "pacman":
+				Parameters.choice = TPChoice.pacMan;
 				break;
 			}
 		if (args.length > 1)
@@ -79,7 +79,7 @@ public class GeneralMain {
 				Parameters.nbParticles=3;
 				Parameters.TORIQUE = true;
 				break;
-			case "motionPlanningDefaut":
+			case "pacmanDefaut":
 				Parameters.gridSizeX = 20;
 				Parameters.gridSizeY = 20;
 				Parameters.boxSize = 25;

@@ -17,7 +17,7 @@ public class MyPanel extends JPanel {
 
 	public void paintComponent(Graphics graph) {
 		super.paintComponent(graph);
-		if (Parameters.choice == TPChoice.motionPlanning && sma.fini) {
+		if (Parameters.choice == TPChoice.pacMan && sma.fini) {
 			if (((EnvironnementPacMan) sma.env).avatar.attrape) {
 				graph.drawString("Perdu !", 50, 50);
 			} else {
