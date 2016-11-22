@@ -41,18 +41,25 @@ import jade.util.Logger;
  * @author Tiziana Trucco - CSELT S.p.A.
  * @version  $Date: 2010-04-08 13:08:55 +0200 (gio, 08 apr 2010) $ $Revision: 6297 $  
  */
-public class PingAgent extends Agent {
+public class PongAgent extends Agent {
 
 	private Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	private class WaitPingAndReplyBehaviour extends CyclicBehaviour {
-
+		private int nbTour = 10;
+		//private int nbTour = (int) (Math.random() * 10);
 		public WaitPingAndReplyBehaviour(Agent a) {
 			super(a);
 		}
 
 		public void action() {
 			ACLMessage  msg = myAgent.receive();
+			if(nbTour <= 0){
+				doDelete();
+				return;
+			}
+			
+			nbTour--;
 			if(msg != null){
 				ACLMessage reply = msg.createReply();
 
@@ -60,8 +67,13 @@ public class PingAgent extends Agent {
 					String content = msg.getContent();
 					if ((content != null) && (content.indexOf("ping") != -1)){
 						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Received PING Request from "+msg.getSender().getLocalName());
-						reply.setPerformative(ACLMessage.INFORM);
+						reply.setPerformative(ACLMessage.REQUEST);
 						reply.setContent("pong");
+					}
+					else if((content != null) && (content.indexOf("pong") != -1)){
+						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Received PONG Request from "+msg.getSender().getLocalName());
+						reply.setPerformative(ACLMessage.REQUEST);
+						reply.setContent("ping");
 					}
 					else{
 						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Unexpected request ["+content+"] received from "+msg.getSender().getLocalName());
@@ -84,12 +96,11 @@ public class PingAgent extends Agent {
 	} // END of inner class WaitPingAndReplyBehaviour
 
 
-
 	protected void setup() {
 		// Registration with the DF 
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();   
-		sd.setType("PingAgent"); 
+		sd.setType("PongAgent"); 
 		sd.setName(getName());
 		sd.setOwnership("TILAB");
 		dfd.setName(getAID());

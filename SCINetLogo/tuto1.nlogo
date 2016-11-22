@@ -1,48 +1,41 @@
 to setup
-  ca
-  ask patches [set pcolor green]
-  ask patches with  [(distancexy 0 0) <= 10 and (distancexy 0 0) >= 9][set pcolor white]
-  ask patches with  [pxcor = max-pxcor or pxcor = min-pxcor or pycor = max-pycor or pycor = min-pycor or pxcor = 0][set pcolor white]
-  create-turtles 11
-  ask turtles [set color red]
-  create-turtles 11
-  ask turtles with [color != red][set color blue]
-  ask turtles [setxy random-xcor random-ycor]
-  ask turtles [set size 5]
-  ask turtles [set shape "turtle"]
-end
-
-to wiggle
-  lt random 30
-  rt random 30
-  ifelse can-move? 1 [fd 1] [rt 180]
+  clear-all
+  set-default-shape turtles "circle"
+  crt 1000 [ setxy random-xcor random-ycor
+             set color red ]
+  reset-ticks
 end
 
 to go
-  ask turtles [wiggle]
+  ask turtles [ wiggle ]
+  tick
+end
+
+to wiggle
+  set heading random 360  fd 1
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-707
+210
 10
-1772
-736
-105
-69
-5.0
+649
+470
+16
+16
+13.0
 1
 10
 1
 1
 1
 0
-0
-0
 1
--105
-105
--69
-69
+1
+1
+-16
+16
+-16
+16
 0
 0
 1
@@ -50,13 +43,13 @@ ticks
 30.0
 
 BUTTON
-43
-74
-106
-107
+12
+40
+85
+73
 NIL
-go
-T
+setup\n
+NIL
 1
 T
 OBSERVER
@@ -67,13 +60,13 @@ NIL
 1
 
 BUTTON
-218
-125
-291
-158
+21
+156
+84
+189
 NIL
-setup
-NIL
+go
+T
 1
 T
 OBSERVER
