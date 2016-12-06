@@ -4,11 +4,11 @@ executer :
 java -cp lib/jade.jar:classes jade.Boot -gui -agents ping1:examples.PingAgent.PongAgent
 
 plusieurs agent :
-java -cp lib/jade.jar:classes jade.Boot -gui -agents "pong1:examples.PingAgent.PongAgent;pong2:examples.PingAgent.PongAgent"
+java -cp lib/jade.jar:classes jade.Boot -gui -agents "jacky:tp.EchangeTout;paulo:examples.tp.EchangeTout"
 
 
 compiler : 
-javac -classpath lib/jade.jar -d classes src/examples/PingAgent/*.java
+javac -classpath lib/jade.jar -d classes src/tp/*.java
 
 
 A faire
