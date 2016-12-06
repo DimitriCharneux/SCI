@@ -21,7 +21,7 @@ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 Boston, MA  02111-1307, USA.
  *****************************************************************/
 
-package examples.PingAgent;
+package tp;
 
 import jade.core.*;
 import jade.core.behaviours.*;
@@ -41,39 +41,46 @@ import jade.util.Logger;
  * @author Tiziana Trucco - CSELT S.p.A.
  * @version  $Date: 2010-04-08 13:08:55 +0200 (gio, 08 apr 2010) $ $Revision: 6297 $  
  */
-public class PongAgent extends Agent {
+public class EchangeBananeAgent extends Agent {
 
 	private Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	private class WaitPingAndReplyBehaviour extends CyclicBehaviour {
-		private int nbTour = 10;
-		//private int nbTour = (int) (Math.random() * 10);
+		private int nbBanane = 5, nbTomate = 0;
 		public WaitPingAndReplyBehaviour(Agent a) {
 			super(a);
 		}
 
 		public void action() {
 			ACLMessage  msg = myAgent.receive();
-			if(nbTour <= 0){
-				doDelete();
-				return;
-			}
-			
-			nbTour--;
+
 			if(msg != null){
 				ACLMessage reply = msg.createReply();
-
+				reply.setPerformative(ACLMessage.REQUEST);
 				if(msg.getPerformative()== ACLMessage.REQUEST){
 					String content = msg.getContent();
-					if ((content != null) && (content.indexOf("ping") != -1)){
-						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Received PING Request from "+msg.getSender().getLocalName());
-						reply.setPerformative(ACLMessage.REQUEST);
-						reply.setContent("pong");
+					if ((content != null) && (content.indexOf("tomate") != -1)){
+						nbTomate ++;
+						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Recoit une tomate de "+msg.getSender().getLocalName() + ", il a donc " + nbTomate + " tomates.");
+						
+						if(nbBanane > 0){
+							nbBanane --;
+							myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - envoit une banane à "+msg.getSender().getLocalName() + ", il a donc " + nbBanane + " bananes.");
+							reply.setContent("banane");
+						} else {
+							myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - n'a plus de banane, il remercie donc "+msg.getSender().getLocalName() + " pour sa générosité.");
+							reply.setContent("merci");
+						}
 					}
-					else if((content != null) && (content.indexOf("pong") != -1)){
-						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Received PONG Request from "+msg.getSender().getLocalName());
-						reply.setPerformative(ACLMessage.REQUEST);
-						reply.setContent("ping");
+					else if((content != null) && (content.indexOf("merci") != -1)){
+						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" a recu un remerciement de "+msg.getSender().getLocalName());
+						return;
+					}else if((content != null) && (content.indexOf("merci") != -1)){
+						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" a recu un remerciement de "+msg.getSender().getLocalName());
+						return;
+					}else if((content != null) && (content.indexOf("inventaire") != -1)){
+						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" a " + nbBanane + " bananes et " + nbTomate + " tomates.");
+						reply.setContent("Agent "+getLocalName()+" a " + nbBanane + " bananes et " + nbTomate + " tomates.");
 					}
 					else{
 						myLogger.log(Logger.INFO, "Agent "+getLocalName()+" - Unexpected request ["+content+"] received from "+msg.getSender().getLocalName());
