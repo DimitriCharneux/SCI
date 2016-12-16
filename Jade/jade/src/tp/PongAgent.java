@@ -109,6 +109,7 @@ public class PongAgent extends Agent {
 			DFService.register(this,dfd);
 			WaitPingAndReplyBehaviour PingBehaviour = new  WaitPingAndReplyBehaviour(this);
 			addBehaviour(PingBehaviour);
+			myLogger.log(Logger.INFO, "Agent "+getLocalName()+" have been created");
 		} catch (FIPAException e) {
 			myLogger.log(Logger.SEVERE, "Agent "+getLocalName()+" - Cannot register with DF", e);
 			doDelete();

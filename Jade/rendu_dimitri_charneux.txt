@@ -1,0 +1,13 @@
+le TP a été réalisé par Dimitri Charneux.
+
+Vous pouvez compiler tout le projet avec la commande javac -classpath lib/jade.jar -d classes src/tp/*.java.
+
+Les agents qui intéragissent entre eux sont les EchangeTout.java.
+Ils vont avoir un certain nombre de banane et de tomate et vont se les échanger jusqu'à ce qu'un des agents n'a plus rien a échanger.
+Le premier message va indiquer quel aliment va être proposé à l'échange et quel aliment va être reçu.
+Si A commence par demander des tomates, il devra envoyer des bananes à B pour payer les tomates. L'échange s'arretera si B n'a plus de tomates ou si A n'a plus de bananes.
+Vous pouvez lancer cette simulation avec la commande suivantes :
+java -cp lib/jade.jar:classes jade.Boot -gui -agents "antoine:tp.EchangeTout;philippe:tp.EchangeTout"
+Vous pouvez envoyer le même message que sur l'image messageDebutEchange.png présent dans ce dossier.
+Le message "jeTeVendsBanane" commence en échange banane contre tomate, jeTeVendstomate un échange tomate contre banane et inventaire permet de connaître ce que possède un agent.
+

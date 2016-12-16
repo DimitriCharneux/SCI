@@ -151,7 +151,7 @@ public class EchangeTout extends Agent {
 		// Registration with the DF 
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();   
-		sd.setType("PongAgent"); 
+		sd.setType("EchangeTout"); 
 		sd.setName(getName());
 		sd.setOwnership("TILAB");
 		dfd.setName(getAID());
